@@ -9,7 +9,7 @@
 
         </button>
 
-        <template #popper>
+        <template #popper="{ hide }">
             <ul class="-space-y-1">
 
                 <li v-for="site in sites" :key="site.id">
@@ -19,7 +19,10 @@
                 </li>
 
                 <li>
-                    <button class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-indigo-500 font-bold text-sm">Add a Site</button>
+                    <button v-on:click="showNewSiteModal = true; hide();"
+                            class="block w-full text-left px-4 py-2 hover:bg-gray-100 text-indigo-500 font-bold text-sm">
+                        Add a Site
+                    </button>
                 </li>
 
 
@@ -27,14 +30,27 @@
         </template>
     </VDropdown>
 
+    <VueFinalModal v-model="showNewSiteModal" classes="flex justify-center items-start pt-16 md:pt-24 mx-4"
+                   content-class="relative max-h-full rounded bg-white w-full max-w-2xl p-4 md:p-6"
+                   overlay-class="bg-gradient-to-r from-gray-800 to-gray-500 opacity-50" :esc-to-close="true">
+
+        Show Modal
+    </VueFinalModal>
+
 </template>
 
 <script setup>
 import {Link} from '@inertiajs/vue3'
+import {VueFinalModal} from "vue-final-modal";
+import {ref} from "vue";
 
 defineProps({
     sites: Array
 })
+
+const showNewSiteModal = ref(false)
+
+
 </script>
 
 <style scoped>
