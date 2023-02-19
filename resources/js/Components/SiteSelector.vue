@@ -11,6 +11,7 @@
 
         <template #popper>
             <ul class="-space-y-1">
+
                 <li v-for="site in sites" :key="site.id">
                     <Link :href="route('dashboard', site.id)" class="px-4 py-2 hover:bg-gray-100 block text-sm text-gray-500 hover:text-gray-700">
                         {{ site.domain }}
