@@ -27,6 +27,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard/{site?}', DashboardController::class)->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/sites', \App\Http\Controllers\SiteStoreController::class);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

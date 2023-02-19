@@ -34,22 +34,49 @@
                    content-class="relative max-h-full rounded bg-white w-full max-w-2xl p-4 md:p-6"
                    overlay-class="bg-gradient-to-r from-gray-800 to-gray-500 opacity-50" :esc-to-close="true">
 
-        Show Modal
+        <h2 class="font-semibold text-lg text-gray-800 leading-tight">New Site</h2>
+
+        <form v-on:submit.prevent="createSite" class="overflow-hidden space-y-4">
+
+            <InputLabel for="domain" value="Domain" class="sr-only"/>
+            <TextInput id="domain" type="text" class="block w-full h-9 text-sm" placeholder="e.g. https://mrwilde.dev" v-model="siteForm.domain"/>
+
+            <InputError class="mt-2" :message="siteForm.errors.domain" />
+
+            <PrimaryButton>Add</PrimaryButton>
+        </form>
     </VueFinalModal>
 
 </template>
 
 <script setup>
-import {Link} from '@inertiajs/vue3'
+import {Link, useForm} from '@inertiajs/vue3'
 import {VueFinalModal} from "vue-final-modal";
 import {ref} from "vue";
+import TextInput from "@/Components/TextInput.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import InputError from "@/Components/InputError.vue";
 
 defineProps({
     sites: Array
 })
 
-const showNewSiteModal = ref(false)
+const siteForm = useForm({
+    domain: null
+})
 
+const createSite = () => {
+    siteForm.post('/sites', {
+        preserveScroll: true,
+        onSuccess: () => {
+            siteForm.reset()
+            showNewSiteModal.value = false
+        }
+    });
+}
+
+const showNewSiteModal = ref(false)
 
 </script>
 
